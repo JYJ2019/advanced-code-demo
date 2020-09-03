@@ -1,9 +1,9 @@
-package com.itheima.demo06.StringBuilder;
+package com.itheima.Test;
 
 /*
     StringBuilder类
  */
-public class Test02 {
+public class StringBuilderTest02 {
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder();
 

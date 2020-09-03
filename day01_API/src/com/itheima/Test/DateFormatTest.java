@@ -1,4 +1,4 @@
-package com.itheima.demo03.DateFormat;
+package com.itheima.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,7 +16,7 @@ import java.util.Scanner;
         5.使用当前的日期毫秒值-出生日期的毫秒值
         6.把毫秒值的差值转换为天(s / 1000 / 60 / 60 / 24)
  */
-public class Demo02Test {
+public class DateFormatTest {
     public static void main(String[] args) throws ParseException {
         //1.使用Scanner类中的方法next,获取出生日期
         Scanner sc = new Scanner(System.in);

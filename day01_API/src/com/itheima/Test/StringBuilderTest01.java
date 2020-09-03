@@ -1,9 +1,9 @@
-package com.itheima.demo06.StringBuilder;
+package com.itheima.Test;
 
 /*
     System类
  */
-public class Test01 {
+public class StringBuilderTest01 {
     public static void main(String[] args) {
         //获取当前系统毫秒值时间
         long l = System.currentTimeMillis();

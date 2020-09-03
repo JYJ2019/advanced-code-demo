@@ -1,11 +1,11 @@
-package com.itheima.demo04.Calendar;
+package com.itheima.Test;
 
 import java.util.Calendar;
 
 /*
     Calendar类
  */
-public class Test02 {
+public class CalendarTest02 {
     public static void main(String[] args) {
         //获取日历类对象
         Calendar c = Calendar.getInstance();

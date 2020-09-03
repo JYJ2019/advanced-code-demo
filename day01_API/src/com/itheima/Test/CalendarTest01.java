@@ -1,4 +1,4 @@
-package com.itheima.demo04.Calendar;
+package com.itheima.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,7 +7,7 @@ import java.util.Date;
 /*
     Date类
  */
-public class Test01 {
+public class CalendarTest01 {
     public static void main(String[] args) throws ParseException {
         //空参的构造方法
         Date d = new Date(3000L);
