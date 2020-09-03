@@ -1,4 +1,4 @@
-package com.itheima.demo01.Collection;
+package com.itheima.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +13,7 @@ import java.util.Objects;
     int size();             获取集合的长度
     Object[] toArray();     将集合转成一个数组
  */
-public class Test01 {
+public class CollectionTest01 {
     public static void main(String[] args) {
         Collection<String> coll = new ArrayList<>();
 
