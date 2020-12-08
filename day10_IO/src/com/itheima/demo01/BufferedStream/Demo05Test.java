@@ -50,7 +50,7 @@ public class Demo05Test {
             line = key + "." + value;
             //9.把拼接好的文本,使用字符缓冲输出流中的方法 write,写入到文件中
             bw.write(line);
-            bw.newLine();
+            bw.newLine();//写换行
         }
 
         //10.释放资源
