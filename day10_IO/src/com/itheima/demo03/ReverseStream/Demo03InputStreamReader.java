@@ -35,12 +35,33 @@ import java.nio.charset.StandardCharsets;
  */
 public class Demo03InputStreamReader {
     public static void main(String[] args) throws IOException {
-        InputStreamReader isr = new InputStreamReader(new FileInputStream("day10_IO\\utf_8.txt"), StandardCharsets.UTF_8);
-        // InputStreamReader isr = new InputStreamReader(new FileInputStream("day10_IO\\utf_8.txt"), "gbk");//乱码
+        // read_utf_8();
+        read_gbk();
+    }
+
+    private static void read_gbk() throws IOException {
+        //1.创建 InputStreamReader对象,构造方法中传递字节输入流和指定的编码表名称
+        InputStreamReader isr = new InputStreamReader(new FileInputStream("day10_IO\\gbk.txt"), "GBK");
+        // InputStreamReader isr = new InputStreamReader(new FileInputStream("day10_IO\\gbk.txt"), "UTF-8");
+        // 2.使用 InputStreamReader对象中的方法read读取文件
         int len;
         while ((len = isr.read()) != -1) {
             System.out.print((char) len);
         }
+        //3.释放资源
+        isr.close();
+    }
+
+    private static void read_utf_8() throws IOException {
+        //1.创建 InputStreamReader对象,构造方法中传递字节输入流和指定的编码表名称
+        InputStreamReader isr = new InputStreamReader(new FileInputStream("day10_IO\\utf_8.txt"), StandardCharsets.UTF_8);
+        // InputStreamReader isr = new InputStreamReader(new FileInputStream("day10_IO\\utf_8.txt"));//可省略默认utf-8
+        //2.使用 InputStreamReader对象中的方法read读取文件
+        int len;
+        while ((len = isr.read()) != -1) {
+            System.out.print((char) len);
+        }
+        //3.释放资源
         isr.close();
     }
 }
