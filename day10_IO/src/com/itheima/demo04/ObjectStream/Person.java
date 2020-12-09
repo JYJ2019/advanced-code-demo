@@ -18,10 +18,27 @@ import java.io.Serializable;
             有：就可以序列化和反序列化
             没有：就会抛出 NotSerializableException异常
     去市场买肉 --> 肉上有一个蓝色章(检测合格) --> 放心购买 --> 买回来怎么吃随意
+
+    static关键字:静态关键字
+        静态优先于非静态加载到内存中(静态优先于对象进入到内存中)
+        被 static 修饰的成员变量不能被序列化的,序列化的都是对象
+        private static int age;
+        oos.writeObject(new Person("小美女", 18));
+        Object o = ois.readObject();
+        Person {name='小美女',age=0}
+
+    transient关键字:瞬态关键字
+        被transient修饰成员变量,不能被序列化
+        private transient int age;
+        oos.writeObject(new Person("小美女",18));
+        Object o = ois.readObject();
+        Person{nome='小美女',age=0}
  */
 public class Person implements Serializable {
+    //解决InvalidClassException
+    private static final long serialVersionUID = 1L;
     private String name;
-    private int age;
+    private /*transient*/ int age;
 
     public Person() {
     }
