@@ -11,4 +11,5 @@ package com.itheima.demo01.TCP;
 
  */
 public class TCPClient {
+12321321321231
 }
