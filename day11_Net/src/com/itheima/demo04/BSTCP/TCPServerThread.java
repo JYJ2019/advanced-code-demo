@@ -3,6 +3,7 @@ package com.itheima.demo04.BSTCP;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 /**
  * @Description：模拟BS服务器
@@ -16,71 +17,51 @@ import java.net.Socket;
  */
 public class TCPServerThread {
     public static void main(String[] args) throws IOException {
-        //创建一个服务器ServerSocket,和系统要指定的端口号
-        ServerSocket server = new ServerSocket(8080);
-
-        /*
-            浏览器解析服务器回写的html页面,页面中如果有图片,那么浏览器就会单独的开启一个线程,读取服务器的图片
-            我们就的让服务器一直处于监听状态,客户端请求一次,服务器就回写一次
-         */
-        while(true){
-            //使用accept方法获取到请求的客户端对象(浏览器)
+        ServerSocket server = new ServerSocket(8888);
+        while (true) {
             Socket socket = server.accept();
+            new Thread(new Web(socket)).start();
+        }
+    }
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        //使用Socket对象中的方法getInputStream,获取到网络字节输入流InputStream对象
-                        InputStream is = socket.getInputStream();
-                        //使用网络字节输入流InputStream对象中的方法read读取客户端的请求信息
-                        /*byte[] bytes = new byte[1024];
-                        int len = 0;
-                        while((len = is.read(bytes))!=-1){
-                            System.out.println(new String(bytes,0,len));
-                        }*/
+    static class Web implements Runnable {
+        private Socket socket;
 
-                        //把is网络字节输入流对象,转换为字符缓冲输入流
-                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                        //把客户端请求信息的第一行读取出来 GET /11_Net/web/index.html HTTP/1.1
-                        String line = br.readLine();
-                        System.out.println(line);
-                        //把读取的信息进行切割,只要中间部分 /11_Net/web/index.html
-                        String[] arr = line.split(" ");
-                        //把路径前边的/去掉,进行截取 11_Net/web/index.html
-                        String htmlpath = arr[1].substring(1);
-
-                        //创建一个本地字节输入流,构造方法中绑定要读取的html路径
-                        FileInputStream fis = new FileInputStream("D:\\xxi\\IntellijProject\\advanced-code-demo" + htmlpath);
-                        //使用Socket中的方法getOutputStream获取网络字节输出流OutputStream对象
-                        OutputStream os = socket.getOutputStream();
-
-                        // 写入HTTP协议响应头,固定写法
-                        os.write("HTTP/1.1 200 OK\r\n".getBytes());
-                        os.write("Content-Type:text/html\r\n".getBytes());
-                        // 必须要写入空行,否则浏览器不解析
-                        os.write("\r\n".getBytes());
-
-                        //一读一写复制文件,把服务读取的html文件回写到客户端
-                        int len = 0;
-                        byte[] bytes = new byte[1024];
-                        while((len = fis.read(bytes))!=-1){
-                            os.write(bytes,0,len);
-                        }
-
-                        //释放资源
-                        fis.close();
-                        socket.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-
-
+        public Web(Socket socket) {
+            this.socket = socket;
         }
 
+        public void run() {
+            try {
+                //转换流,读取浏览器请求第一行
+                BufferedReader readWb = new
+                        BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String requst = readWb.readLine();
+                //取出请求资源的路径
+                String[] strArr = requst.split(" ");
+                System.out.println(Arrays.toString(strArr));
+                String path = strArr[1].substring(1);
+                System.out.println(path);
 
-        //server.close();
+                FileInputStream fis = new FileInputStream(path);
+                System.out.println(fis);
+                byte[] bytes = new byte[1024];
+                int len = 0;
+                //向浏览器 回写数据
+                OutputStream out = socket.getOutputStream();
+                out.write("HTTP/1.1 200 OK\r\n".getBytes());
+                out.write("Content-Type:text/html\r\n".getBytes());
+                out.write("\r\n".getBytes());
+                while ((len = fis.read(bytes)) != -1) {
+                    out.write(bytes, 0, len);
+                }
+                fis.close();
+                out.close();
+                readWb.close();
+                socket.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }
