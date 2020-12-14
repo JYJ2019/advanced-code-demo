@@ -1,5 +1,7 @@
 package com.itheima.demo07.Function;
 
+import java.util.function.Function;
+
 /**
  * @Description：Function接口中的默认方法andThen
  * @Author 金宇佳
@@ -27,5 +29,26 @@ package com.itheima.demo07.Function;
             fun2再调用apply方法,把 Integer转换为字符``串
  */
 public class Demo02Function_andThen {
+    /*
+        定义一个方法
+        参数串一个字符串类型的整数
+        参数再传递两个 Function 接口
+        一个泛型使用 Function<String, Integer>
+        一个泛型使用 Function<Integer, String>
+     */
+    public static void change(String s, Function<String, Integer> fun1, Function<Integer,String> fun2) {
+        String ss = fun1.andThen(fun2).apply(s);
+        System.out.println(ss);
+    }
 
+    public static void main(String[] args) {
+        //定义一个字符串类型的整数
+        String ss = "123";
+        //调用change方法,传递字符串和两个Lambda表达式
+        // change(ss,str -> Integer.parseInt(str) + 10, i -> i + "");
+
+        //优化lambda表达式
+        change(ss,(str) -> Integer.parseInt(str) + 10 , String::valueOf);
+
+    }
 }
