@@ -3,7 +3,7 @@ package com.itheima.demo06.Predicate.Demo01;
 import java.util.function.Predicate;
 
 /**
- * @Description：Predicate接口
+ * @Description：Predicate接口and方法
  * @Author 金宇佳
  * @Date 2020/12/14 8:50
  * @Version 1.0
